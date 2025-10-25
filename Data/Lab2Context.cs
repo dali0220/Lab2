@@ -56,5 +56,6 @@ namespace Lab2.Data
                 }
             );
         }
+        public DbSet<Lab2.Models.Category> Category { get; set; } = default!;
     }
 }

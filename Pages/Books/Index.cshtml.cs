@@ -1,33 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Lab2.Data;
 using Lab2.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lab2.Pages.Books
 {
     public class IndexModel : PageModel
     {
-        private readonly Lab2.Data.Lab2Context _context;
+        private readonly Lab2Context _context;
 
-        public IndexModel(Lab2.Data.Lab2Context context)
+        public IndexModel(Lab2Context context)
         {
             _context = context;
         }
 
-        public IList<Book> Book { get;set; } = default!;
+        public IList<Book> Books { get; set; } = new List<Book>();
 
         public async Task OnGetAsync()
         {
-            Book = await _context.Book
+            Books = await _context.Book
+                .Include(b => b.Author)
                 .Include(b => b.Publisher)
-                .Include(b=>b.Author)
+                .Include(b => b.BookCategories).ThenInclude(bc => bc.Category)
+                .AsNoTracking()
                 .ToListAsync();
         }
-
     }
 }

@@ -10,61 +10,46 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Book[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Book[0].Author)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Book[0].Price)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model=> model.Book[0].PublishingDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model=>model.Book[0].Publisher.PublisherName)
-
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Book[0].Author)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.Books[0].Title)</th>
+            <th>Author</th>
+            <th>@Html.DisplayNameFor(model => model.Books[0].Price)</th>
+            <th>@Html.DisplayNameFor(model => model.Books[0].PublishingDate)</th>
+            <th>@Html.DisplayNameFor(model => model.Books[0].Publisher.PublisherName)</th>
+            <th>@Html.DisplayNameFor(model => model.Books[0].BookCategories)</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Book) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem=>item.PublishingDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem=>item.Publisher.PublisherName)
-            </td>
-            <td>
-                 @Html.DisplayFor(modelItem => item.Author.LastName)
-            </td>
-                <td>@(item.Author.FirstName + " " + item.Author.LastName)</td>
+        @foreach (var item in Model.Books)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>
+                    @(item.Author != null
+                        ? (item.Author.FirstName + " " + item.Author.LastName)
+                        : "-")
+                </td>
+                <td>@item.Price</td>
+                <td>@item.PublishingDate.ToShortDateString()</td>
+                <td>@item.Publisher?.PublisherName</td>
+                <td>
+                    @foreach (var category in (item.BookCategories ?? Enumerable.Empty<Lab2.Models.BookCategory>()))
+                    {
+                        @category.Category.CategoryName
 
-
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+                        <br />
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
