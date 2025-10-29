@@ -11,11 +11,30 @@
     <a asp-page="Create">Create New</a>
 </p>
 
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by Book Title / Author Name:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Books[0].Title)</th>
-            <th>Author</th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.TitleSort">
+                    @Html.DisplayNameFor(model => model.Books[0].Title)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.AuthorSort">
+                    Author
+                </a>
+            </th>
             <th>@Html.DisplayNameFor(model => model.Books[0].Price)</th>
             <th>@Html.DisplayNameFor(model => model.Books[0].PublishingDate)</th>
             <th>@Html.DisplayNameFor(model => model.Books[0].Publisher.PublisherName)</th>
@@ -24,15 +43,11 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Books)
+        @foreach (var item in Model.BookD.Books)
         {
             <tr>
                 <td>@item.Title</td>
-                <td>
-                    @(item.Author != null
-                        ? (item.Author.FirstName + " " + item.Author.LastName)
-                        : "-")
-                </td>
+                <td>@(item.Author != null ? (item.Author.FirstName + " " + item.Author.LastName) : "-")</td>
                 <td>@item.Price</td>
                 <td>@item.PublishingDate.ToShortDateString()</td>
                 <td>@item.Publisher?.PublisherName</td>
@@ -40,7 +55,6 @@
                     @foreach (var category in (item.BookCategories ?? Enumerable.Empty<Lab2.Models.BookCategory>()))
                     {
                         @category.Category.CategoryName
-
                         <br />
                     }
                 </td>
