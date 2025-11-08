@@ -33,6 +33,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-page="/Categories/Index">Categories</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asppage="/Members/Index">Members</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asppage="/Borrowings/Index">Borrowings</a>
+                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
@@ -40,6 +46,7 @@
 
 
                     </ul>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>

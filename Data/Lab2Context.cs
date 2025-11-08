@@ -57,5 +57,7 @@ namespace Lab2.Data
             );
         }
         public DbSet<Lab2.Models.Category> Category { get; set; } = default!;
+        public DbSet<Lab2.Models.Member> Member { get; set; } = default!;
+        public DbSet<Lab2.Models.Borrowing> Borrowing { get; set; } = default!;
     }
 }
